@@ -8,6 +8,7 @@ end
 
 special = ['/', '\\', '&', '%', '$', '!', '(', ')', '@', '#', '?']
 chars = ('a'..'z').to_a + ('0'..'9').to_a + ('A'..'Z').to_a
+leet = ["h4ck", "5h3ll", "h4x0r", "pwn", "p0p"]
 
 special.each do|s|
     chars << s
