@@ -13,12 +13,11 @@ special.each do|s|
     chars << s
 end
 
-prng = Random.new
 i = 0
 
 password = ""
 begin
-    password << chars[prng.rand(chars.length)]
+    password << chars.sample()
     i += 1
 end while i < count
 
