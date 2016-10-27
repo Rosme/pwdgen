@@ -5,8 +5,8 @@ require 'sinatra'
 class Password
     @@special = ['/', '\\', '&', '%', '$', '!', '(', ')', '@', '#', '?']
     @@chars = ('a'..'z').to_a + ('0'..'9').to_a + ('A'..'Z').to_a
-    @@leet = ["h4ck", "5h3ll", "h4x0r", "pwn", "p0p"]
-    
+    @@leetWord = ["h4ck", "5h3ll", "h4x0r", "pwn", "p0p"]
+    @@leet = {'o'=> 0, 'O'=>0, 'l'=>1, 'L'=>'1', 'e'=>'3', 'E'=>'3', 'a'=>4, 'A'=>4, 's'=>5, 'S'=>5}
 
     def initialize(count, special, leet)
         @count = count
@@ -23,7 +23,7 @@ class Password
         
         if @hasLeet
             @@leet.each do|s|
-                @@chars << s
+                #@@chars << s
             end
         end
 
@@ -34,6 +34,10 @@ class Password
             pwd << word
             i += word.length
         end while i < @count
+
+        if @hasLeet
+            pwd = pwd.tr(@@leet.keys.join(), @@leet.values.join())
+        end
 
         return pwd
     end
