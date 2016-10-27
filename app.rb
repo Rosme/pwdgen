@@ -23,7 +23,7 @@ class Password
         
         if @hasLeet
             @@leet.each do|s|
-                #@@chars << s
+                @@chars << s
             end
         end
 
@@ -49,18 +49,13 @@ if ARGV.length == 1
     count = ARGV[0].to_i
 end
 
-
-
-def getPassword()
-end
-
 get '/' do
     erb :index
 end
 
 get '/pwd' do
     response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
+    response.headers['Access-Control-Allow-Methods'] = 'GET'
 
     pass = Password.new(12, true, false)
     pass.generate()
