@@ -8,9 +8,10 @@ class Password
     @@leetWord = ["h4ck", "5h3ll", "h4x0r", "pwn", "p0p"]
     @@leet = {'o'=> 0, 'O'=>0, 'l'=>1, 'L'=>'1', 'e'=>'3', 'E'=>'3', 'a'=>4, 'A'=>4, 's'=>5, 'S'=>5}
 
-    def initialize(count, special, leet)
+    def initialize(count, special, leet, leetWord)
         @count = count
         @hasSpecial = special
+        @hasLeetWord = leetWord
         @hasLeet = leet
     end
 
@@ -20,9 +21,9 @@ class Password
                 @@chars << s
             end
         end
-        
-        if @hasLeet
-            @@leet.each do|s|
+
+        if @hasLeetWord
+            @@leetWord.each do|s|
                 @@chars << s
             end
         end
@@ -57,7 +58,7 @@ get '/pwd' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET'
 
-    pass = Password.new(12, true, false)
+    pass = Password.new(12, true, false, false)
     pass.generate()
 end
 
@@ -66,8 +67,9 @@ post '/pwd' do
     response.headers['Access-Control-Allow-Methods'] = 'POST'
    
     count = '12'
-    special = 'on'
+    special = 'off'
     leet = 'off'
+    leetWord = 'off'
 
     if params.has_key?('count')
         count = params['count']
@@ -82,6 +84,10 @@ post '/pwd' do
         leet = params['leet']
     end
 
-    pass = Password.new(count.to_i, special == 'on'?true:false, leet == 'on'?true:false)
+    if params.has_key?('leetword')
+        leetWord = params['leetword']
+    end
+
+    pass = Password.new(count.to_i, special == 'on'?true:false, leet == 'on'?true:false, leetWord == 'on'?true:false)
     pass.generate()
 end
